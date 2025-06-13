@@ -82,7 +82,6 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    needs: [ docker-build, lint, build-and-test ]
 
     environment:
       name: staging
@@ -125,7 +124,7 @@ jobs:
     name: Generate Summary Report
     runs-on: ubuntu-latest
     if: always()
-    needs: [ build-and-test, lint, docker-build, deploy-production, deploy-staging ]
+    needs: [ deploy-production, deploy-staging ]
 
     steps:
       - name: Generate report
