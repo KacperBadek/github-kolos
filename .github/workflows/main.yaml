@@ -2,7 +2,8 @@ name: Kolos
 
 on:
   push:
-    branches: [ "main" ]
+    branches-ignore:
+      - main
 
 env:
   DOCKER_USERNAME: hasacz325
