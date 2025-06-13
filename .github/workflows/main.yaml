@@ -122,8 +122,7 @@ jobs:
     name: Generate Summary Report
     runs-on: ubuntu-latest
     if: always()
-    needs: [ build-and-test, lint, docker-build ]
-
+    needs: [ build-and-test, lint, docker-build, deploy-production, deploy-staging ]
 
     steps:
       - name: Generate report
@@ -138,6 +137,8 @@ jobs:
           echo "- build-and-test: ${{ needs.build-and-test.result || 'nieznany' }}" >> report.txt
           echo "- lint: ${{ needs.lint.result || 'nieznany' }}" >> report.txt
           echo "- docker-build: ${{ needs.docker-build.result || 'nieznany' }}" >> report.txt
+          echo "- deploy-staging: ${{ needs.deploy-staging.result || 'nieznany' }}" >> report.txt
+          echo "- deploy-production: ${{ needs.deploy-production.result || 'nieznany' }}" >> report.txt
 
       - name: Upload report as artifact
         uses: actions/upload-artifact@v4
