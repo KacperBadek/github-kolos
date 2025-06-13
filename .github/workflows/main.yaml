@@ -2,8 +2,8 @@ name: Kolos
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - '**'
 
 env:
   DOCKER_USERNAME: hasacz325
@@ -13,6 +13,7 @@ jobs:
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
 
     steps:
       - name: Checkout repo
@@ -34,6 +35,7 @@ jobs:
   lint:
     name: Run Lint
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
 
     steps:
       - name: Checkout code
