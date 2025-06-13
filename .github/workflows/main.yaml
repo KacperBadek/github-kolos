@@ -73,3 +73,28 @@ jobs:
         with:
             name: docker-image
             path: app-image.tar
+
+  summary-report:
+    name: Generate Summary Report
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Generate report
+        run: |
+          echo "Raport z przebiegu GitHub Actions" > report.txt
+          echo "" >> report.txt
+          echo "Data: $(date)" >> report.txt
+          echo "Commit: ${{ github.sha }}" >> report.txt
+          echo "Autor: ${{ github.actor }}" >> report.txt
+          echo "" >> report.txt
+          echo "Status zadań:" >> report.txt
+          echo "- build-and-test: ${{ needs.build-and-test.result || 'nieznany' }}" >> report.txt
+          echo "- lint: ${{ needs.lint.result || 'nieznany' }}" >> report.txt
+          echo "- docker-build: ${{ needs.docker-build.result || 'nieznany' }}" >> report.txt
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: report.txt
